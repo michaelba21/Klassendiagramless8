@@ -1,0 +1,99 @@
+@startuml
+!theme plain
+
+class Product {
+  # productId: int
+  # name: String
+  # brand: String
+  # purchasePrice: double
+  # sellingPrice: double
+  # currentStock: int
+  # soldCount: int
+  + addToStock(quantity: int): void
+  + sell(quantity: int): void
+  + updatePrice(newPrice: double): void
+}
+
+class Television {
+  - screenType: String
+  - resolution: String
+  - refreshRate: int
+}
+
+class RemoteController {
+  - compatibleWith: String
+  - hasVoiceControl: boolean
+}
+
+class WallBracket {
+  - minScreenSize: double
+  - maxScreenSize: double
+  - adjustable: boolean
+}
+
+class CIModule {
+  - version: String
+}
+
+class Compatibility {
+  - compatibilityId: int
+  - dateCreated: DateTime
+}
+
+class Sale {
+  - saleId: int
+  - dateTime: DateTime
+  - quantity: int
+  + registerSale(): void
+}
+
+class Employee {
+  - employeeId: int
+  - firstName: String
+  - lastName: String
+  - email: String
+  - phoneNumber: String
+  - hireDate: Date
+}
+
+class User {
+  - userId: int
+  - username: String
+  - password: String
+  - role: String
+  - isActive: boolean
+  + login(): boolean
+  + resetPassword(): void
+}
+
+' Inheritance relationships
+Television --|> Product
+RemoteController --|> Product
+WallBracket --|> Product
+CIModule --|> Product
+
+' Association relationships
+Sale --> Product : "sells"
+Compatibility --> Product : "from Product"
+Compatibility --> Product : "to Product"
+User --> Employee : "belongs to"
+
+note top of Compatibility
+  Represents compatible product relationships
+  Example: TV X works with Remote Y
+  Many-to-many relationship resolver
+end note
+
+note top of Sale
+  Records sales transactions
+  Updates product stock automatically
+  Tracks sales history
+end note
+
+note right of User
+  Roles: "Admin", "Manager", "Employee"
+  Admins: Hella, Paulus, Robin
+  Employees: limited permissions
+end note
+
+@enduml
